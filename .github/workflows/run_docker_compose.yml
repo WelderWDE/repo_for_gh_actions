@@ -10,7 +10,12 @@ on:
           - 1
           - 2
           - 3
-
+      compose_file:
+        description: select app to build
+        type: choice
+        options:
+          - docker-compose.yml
+          - docker-compose-second.yml
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -21,4 +26,7 @@ jobs:
       run: |
         # sudo apt-get install docker-compose -y;
         # docker-compose --version
-        echo "Selected version: ${{ github.event.inputs.version }}"
+        pwd;
+        ls -al;
+        echo "Selected version: ${{ github.event.inputs.version }}";
+        echo "Selected version: ${{ github.event.inputs.compose_file }}";
