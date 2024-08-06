@@ -1,0 +1,13 @@
+name: Run Docker compose
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v4
+    - name: "Install Docker"
+      # run: apt install docker docker-compose -y
+      run: docker --version
