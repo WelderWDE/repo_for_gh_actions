@@ -21,7 +21,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v4
-    - name: "Install Docker"
+    - name: "Install Docker compose"
       # run: apt install docker docker-compose -y
       run: |
         # sudo apt-get install docker-compose -y;
@@ -30,3 +30,8 @@ jobs:
         ls -al;
         echo "Selected version: ${{ github.event.inputs.version }}";
         echo "Selected version: ${{ github.event.inputs.compose_file }}";
+    
+    - name: "Install OpenJDK"
+      run: |
+        sudo apt-get install openjdk-11-jdk -y;
+        java -v;
