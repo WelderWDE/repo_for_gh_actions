@@ -2,6 +2,14 @@ name: Run Docker compose
 
 on:
   workflow_dispatch:
+    inputs:
+      version:
+        description: Select a version
+        type: choice
+        options:
+          - 1
+          - 2
+          - 3
 
 jobs:
   build:
@@ -11,5 +19,6 @@ jobs:
     - name: "Install Docker"
       # run: apt install docker docker-compose -y
       run: |
-        sudo apt-get install docker-compose -y;
-        docker-compose --version
+        # sudo apt-get install docker-compose -y;
+        # docker-compose --version
+        echo "Selected version: ${{ github.event.inputs.version }}"
