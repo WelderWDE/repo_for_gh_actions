@@ -29,9 +29,9 @@ jobs:
 
     - name: "Install Docker compose"
       run: |
-        sudo apt-get install docker-compose -y;
+        # sudo apt-get install docker-compose -y;
         # docker-compose --version
-        # pwd;
+        pwd;
         # ls -al;
         # echo "Selected version: ${{ github.event.inputs.version }}";
         # echo "Selected version: ${{ github.event.inputs.compose_file }}";
@@ -43,8 +43,9 @@ jobs:
 
     - name: "check everything"
       run: |
-        docker --version;
-        docker-compose --version;
-        java --version;
-        ls -al
+        docker compose
+        # docker --version;
+        # docker-compose --version;
+        # java --version;
+        # ls -al
 
