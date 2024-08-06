@@ -11,5 +11,5 @@ jobs:
     - name: "Install Docker"
       # run: apt install docker docker-compose -y
       run: |
-        docker --version;
-        docker-compose --version;
+        apt install docker-compose -y;
+        docker-compose --version
