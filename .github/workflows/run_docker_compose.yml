@@ -17,7 +17,7 @@ on:
           - docker-compose.yml
           - docker-compose-second.yml
 jobs:
-  build:
+  install_dependencies:
     runs-on: ubuntu-latest
     steps:
     - name: "Checkout repo"
@@ -29,14 +29,22 @@ jobs:
 
     - name: "Install Docker compose"
       run: |
-        # sudo apt-get install docker-compose -y;
+        sudo apt-get install docker-compose -y;
         # docker-compose --version
-        pwd;
-        ls -al;
-        echo "Selected version: ${{ github.event.inputs.version }}";
-        echo "Selected version: ${{ github.event.inputs.compose_file }}";
+        # pwd;
+        # ls -al;
+        # echo "Selected version: ${{ github.event.inputs.version }}";
+        # echo "Selected version: ${{ github.event.inputs.compose_file }}";
     
     - name: "Install OpenJDK"
       run: |
         sudo apt-get install openjdk-11-jdk -y;
         java --version;
+
+    - name: "check everything"
+      run: |
+        docker --version;
+        docker-compose --version;
+        java --version;
+        ls -al
+
