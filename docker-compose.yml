@@ -1,0 +1,6 @@
+services:
+  alpine-test:
+    build:
+      dockerfile: flask_linux
+    ports:
+      - "8080:8080"

@@ -20,32 +20,41 @@ jobs:
   install_dependencies:
     runs-on: ubuntu-latest
     steps:
-    - name: "Checkout repo"
+    - name: "Checkout main repo"
       uses: actions/checkout@v4
 
-    - name: "Update packages"
-      run: |
-        sudo apt-get update
-
-    - name: "Install Docker compose"
-      run: |
-        # sudo apt-get install docker-compose -y;
-        # docker-compose --version
-        pwd;
-        # ls -al;
-        # echo "Selected version: ${{ github.event.inputs.version }}";
-        # echo "Selected version: ${{ github.event.inputs.compose_file }}";
+    - name: "Checkout second repo"
+      uses: actions/checkout@v4
+      with:
+        repository: WelderWDE/docker_learn
+        path: "docker_learn"
+        ref: refs/heads/main
     
-    - name: "Install OpenJDK"
-      run: |
-        sudo apt-get install openjdk-11-jdk -y;
-        java --version;
+    - name: "listdir"
+      run: ls -al
 
-    - name: "check everything"
+    # - name: "Update packages"
+    #   run: |
+    #     sudo apt-get update
+
+    # - name: "Install Docker compose"
+    #   run: |
+    #     # sudo apt-get install docker-compose -y;
+    #     # docker-compose --version
+    #     pwd;
+    #     # ls -al;
+    #     # echo "Selected version: ${{ github.event.inputs.version }}";
+    #     # echo "Selected version: ${{ github.event.inputs.compose_file }}";
+    
+    # - name: "Install OpenJDK"
+    #   run: |
+    #     sudo apt-get install openjdk-11-jdk -y;
+    #     java --version;
+
+    - name: "Check everything"
       run: |
         docker compose
         # docker --version;
         # docker-compose --version;
         # java --version;
         # ls -al
-
