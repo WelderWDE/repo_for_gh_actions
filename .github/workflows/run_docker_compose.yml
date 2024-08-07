@@ -23,15 +23,15 @@ jobs:
     - name: "Checkout main repo"
       uses: actions/checkout@v4
 
-    - name: "Checkout second repo"
-      uses: actions/checkout@v4
-      with:
-        repository: WelderWDE/docker_learn
-        path: "docker_learn"
-        ref: refs/heads/main
+    # - name: "Checkout second repo"
+    #   uses: actions/checkout@v4
+    #   with:
+    #     repository: WelderWDE/docker_learn
+    #     path: "docker_learn"
+    #     ref: refs/heads/main
     
     - name: "listdir"
-      run: ls -al
+      run: sudo netstat -lpn
 
     # - name: "Update packages"
     #   run: |
