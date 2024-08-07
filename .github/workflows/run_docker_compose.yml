@@ -31,7 +31,10 @@ jobs:
     #     ref: refs/heads/main
     
     - name: "listdir"
-      run: sudo netstat -lpn
+      run: |
+        sudo systemctl stop mono-xsp4.service 
+        sudo systemctl disable mono-xsp4.service
+        sudo netstat -lpn
 
     # - name: "Update packages"
     #   run: |
