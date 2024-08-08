@@ -34,17 +34,5 @@ jobs:
     - name: "Install docker-compose"
       run: sudo apt-get install docker-compose -y
 
-    - name: "listdir"
-      run: |
-        sudo systemctl stop mono-xsp4.service 
-        sudo systemctl disable mono-xsp4.service
-        sudo kill $(ps aux | grep /usr/bin/mono | grep www-data | awk '{print $2}')
-        ps aux | grep /usr/bin/mono
-        sudo netstat -lpn
-
-  compose_checker:
-    runs-on: ${{needs.install_dependencies.outputs.RUNNER}}
-    needs: install_dependencies
-    steps:
-    - name: "Check DC version"
-      run: docker-compose --version
+    - name: "release-port"
+      uses: ./workflows/release-port.yml
