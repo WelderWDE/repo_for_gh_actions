@@ -1,38 +1,62 @@
-name: Run Docker compose
+# name: Run Docker compose
+
+# on:
+#   workflow_dispatch:
+#     inputs:
+#       version:
+#         description: Select a version
+#         type: choice
+#         options:
+#           - 1
+#           - 2
+#           - 3
+#       compose_file:
+#         description: select app to build
+#         type: choice
+#         options:
+#           - docker-compose.yml
+#           - docker-compose-second.yml
+# jobs:
+#   install_dependencies:
+#     runs-on: ubuntu-latest
+#     outputs:
+#       RUNNER: ${{ runner.name }}
+#     steps:
+#     - name: "Checkout main repo"
+#       uses: actions/checkout@v4
+
+#     - name: "Checkout second repo"
+#       uses: actions/checkout@v4
+#       with:
+#         repository: WelderWDE/docker_learn
+#         path: "docker_learn"
+#         ref: refs/heads/main
+#     - name: "Install docker-compose"
+#       run: sudo apt-get install docker-compose -y
+
+#     - name: "release-port"
+#       uses: ./workflows/release-port.yml
+
+
+name: Nmap Scan
 
 on:
   workflow_dispatch:
-    inputs:
-      version:
-        description: Select a version
-        type: choice
-        options:
-          - 1
-          - 2
-          - 3
-      compose_file:
-        description: select app to build
-        type: choice
-        options:
-          - docker-compose.yml
-          - docker-compose-second.yml
+
 jobs:
-  install_dependencies:
+  nmap_scan:
     runs-on: ubuntu-latest
-    outputs:
-      RUNNER: ${{ runner.name }}
+
     steps:
-    - name: "Checkout main repo"
-      uses: actions/checkout@v4
+      - uses: actions/checkout@v3
 
-    - name: "Checkout second repo"
-      uses: actions/checkout@v4
-      with:
-        repository: WelderWDE/docker_learn
-        path: "docker_learn"
-        ref: refs/heads/main
-    - name: "Install docker-compose"
-      run: sudo apt-get install docker-compose -y
+      - name: Install Nmap
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y nmap
 
-    - name: "release-port"
-      uses: ./workflows/release-port.yml
+      - uses: ./.github/actions/nmap-scan
+        id: nmap_scan_action
+
+      - name: Print Nmap scan results
+        run: echo ${{ steps.nmap_scan_action.outputs.nmap_scan_result }}
