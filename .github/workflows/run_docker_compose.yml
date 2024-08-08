@@ -55,7 +55,8 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y nmap
 
-      - uses: ./.github/actions/nmap-scan
+      - name: 'Run nmap'
+        uses: ./.github/actions/nmap-scan
         id: nmap_scan_action
 
       - name: Print Nmap scan results
