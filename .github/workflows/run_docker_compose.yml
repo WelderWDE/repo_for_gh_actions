@@ -19,17 +19,21 @@ on:
 jobs:
   install_dependencies:
     runs-on: ubuntu-latest
+    outputs:
+      RUNNER: ${{ runner.name }}
     steps:
     - name: "Checkout main repo"
       uses: actions/checkout@v4
 
-    # - name: "Checkout second repo"
-    #   uses: actions/checkout@v4
-    #   with:
-    #     repository: WelderWDE/docker_learn
-    #     path: "docker_learn"
-    #     ref: refs/heads/main
-    
+    - name: "Checkout second repo"
+      uses: actions/checkout@v4
+      with:
+        repository: WelderWDE/docker_learn
+        path: "docker_learn"
+        ref: refs/heads/main
+    - name: "Install docker-compose"
+      run: sudo apt-get install docker-compose -y
+
     - name: "listdir"
       run: |
         sudo systemctl stop mono-xsp4.service 
@@ -38,28 +42,9 @@ jobs:
         ps aux | grep /usr/bin/mono
         sudo netstat -lpn
 
-    # - name: "Update packages"
-    #   run: |
-    #     sudo apt-get update
-
-    # - name: "Install Docker compose"
-    #   run: |
-    #     # sudo apt-get install docker-compose -y;
-    #     # docker-compose --version
-    #     pwd;
-    #     # ls -al;
-    #     # echo "Selected version: ${{ github.event.inputs.version }}";
-    #     # echo "Selected version: ${{ github.event.inputs.compose_file }}";
-    
-    # - name: "Install OpenJDK"
-    #   run: |
-    #     sudo apt-get install openjdk-11-jdk -y;
-    #     java --version;
-
-    - name: "Check everything"
-      run: |
-        docker compose
-        # docker --version;
-        # docker-compose --version;
-        # java --version;
-        # ls -al
+  compose_checker:
+    runs-on: ${{needs.install_dependencies.outputs.RUNNER}}
+    needs: install_dependencies
+    steps:
+    - name: "Check DC version"
+      run: docker-compose --version
