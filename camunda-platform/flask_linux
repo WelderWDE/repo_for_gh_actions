@@ -1,0 +1,15 @@
+FROM alpine:latest
+
+RUN apk add python3 py3-flask
+
+# ENV FLASK_APP /home/app.py
+
+COPY app.py run_app.sh /home
+
+WORKDIR /home
+
+RUN chmod +x run_app.sh
+
+EXPOSE 8080
+
+CMD ["./run_app.sh"]
