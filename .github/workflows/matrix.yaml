@@ -10,7 +10,7 @@ on:
         type: choice
         description: "lol"
         options:
-          - '["10", "12", "14"]'
+          - '["10", "12"]'
 
 env:
   VER: ${{ inputs.versions || '["10", "12", "14"]' }}
@@ -20,9 +20,10 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        version: ${{ fromJSON($VER) }}
+        version: ${{ fromJSON(env.VER) }}
         os: [ubuntu-latest]
     steps:
     - name: print matrix
       run: |
         echo ${{ matrix.version }} ${{ matrix.os }}
+        echo ${{ env.VER }}
