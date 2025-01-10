@@ -1,23 +1,28 @@
 name: "Matrix test"
 
 on:
+  schedule:
+    - cron: "*/2 * * * *"
+    
   workflow_dispatch:
     inputs:
       versions:
         type: choice
         description: "lol"
         options:
-          - "10"
+          - '["10", "12", "14"]'
+
+env:
+  VER: ${{ inputs.versions || '["10", "12", "14"]' }}
 
 jobs:
   example_matrix:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        version: ${{ fromJSON('["10"]') }}
+        version: ${{ fromJSON(inputs.versions) }}
         os: [ubuntu-latest]
     steps:
     - name: print matrix
       run: |
         echo ${{ matrix.version }} ${{ matrix.os }}
-        echo ${{ fromJSON('[${{ inputs.versions }}]') }}
