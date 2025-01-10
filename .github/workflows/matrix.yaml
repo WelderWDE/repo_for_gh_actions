@@ -16,7 +16,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        version: ${{ fromJSON('${{ inputs.versions }}') }}
+        version: ${{ fromJSON('["10"]') }}
         os: [ubuntu-latest, windows-latest]
     steps:
     - name: print matrix
