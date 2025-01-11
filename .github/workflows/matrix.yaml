@@ -1,16 +1,41 @@
 name: "Matrix test"
 
 on:
-  workflow_dispatch: { }
+  schedule:
+    - cron: "*/2 * * * *"
+    
+  workflow_dispatch:
+    inputs:
+      versions:
+        type: choice
+        description: "lol"
+        options:
+          - "10"
+          - "12"
+          - '"10", "12"'
 
 jobs:
   example_matrix:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        version: [10, 12, 14]
-        os: [ubuntu-latest, windows-latest]
+        version: ${{ fromJSON(format('[{0}]', inputs.versions || '"10", "12", "14"')) }}
+        os: [linux, windows]
     steps:
     - name: print matrix
       run: |
+        if [[ ${{ matrix.version }} -eq 10 ]]
+        then
+          echo "The variable is 10"
+          VAR="foo"
+        elif [[ ${{ matrix.version }} -eq 12 ]]
+        then
+          echo "The variable is 12"
+          VAR="bar"
+        else
+          echo "The variable is lol"
+          VAR="lol"
+        fi
+
         echo ${{ matrix.version }} ${{ matrix.os }}
+        echo $VAR
