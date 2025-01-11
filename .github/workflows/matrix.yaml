@@ -22,20 +22,22 @@ jobs:
         version: ${{ fromJSON(format('[{0}]', inputs.versions || '"10", "12", "14"')) }}
         os: [linux, windows]
     steps:
-    - name: print matrix
+    - name: set version
+      id: v
       run: |
         if [[ ${{ matrix.version }} -eq 10 ]]
-        then
-          echo "The variable is 10"
-          VAR="foo"
-        elif [[ ${{ matrix.version }} -eq 12 ]]
-        then
-          echo "The variable is 12"
-          VAR="bar"
-        else
-          echo "The variable is lol"
-          VAR="lol"
-        fi
-
+          then
+            echo "The variable is 10"
+            echo "VAR=10" >> $GITHUB_ENV
+          elif [[ ${{ matrix.version }} -eq 12 ]]
+          then
+            echo "The variable is 12"
+            VAR="bar"
+          else
+            echo "The variable is lol"
+            VAR="lol"
+          fi
+    - name: print matrix
+      run: |
         echo ${{ matrix.version }} ${{ matrix.os }}
-        echo $VAR
+        echo ${{ env.VAR }}
