@@ -1,0 +1,10 @@
+name: "Triggering workflow"
+
+on:
+  workflow_call: {}
+
+jobs:
+  default_job:
+    uses: ./.github/workflows/test2.yml
+    with:
+      text: "OLOLO"

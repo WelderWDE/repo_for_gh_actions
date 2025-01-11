@@ -1,0 +1,18 @@
+# name: 'nmap-scan'
+
+# runs:
+#   using: 'node16'
+
+#   steps:
+#     - name: Run Nmap scan
+#       run: nmap -p 8084 localhost
+
+name: 'Run E2E tests'
+description: 'A Github action to run E2E tests and publish results to TestRail'
+
+runs:
+  using: composite
+  steps:
+    - name: Run Nmap scan
+      shell: bash
+      run: nmap -p 8084 localhost

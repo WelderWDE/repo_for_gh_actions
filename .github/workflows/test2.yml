@@ -1,0 +1,16 @@
+name: "Triggered workflow"
+
+on:
+    workflow_call:
+      inputs:
+        text:
+          required: true
+          type: string
+
+jobs:
+  default_job:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: print text
+        run: echo ${{ inputs.text }}

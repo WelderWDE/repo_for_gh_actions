@@ -2,14 +2,65 @@ name: Run Docker compose
 
 on:
   workflow_dispatch:
+    inputs:
+      camunda_plaform_branch:
+        description: Branch from camunda_platform repository
+        required: true
+        default: "main"
+      version:
+        description: Select a version
+        type: choice
+        options:
+          - 1
+          - 2
+          - 3
+      search_engine:
+        description: Application search engine
+        type: choice
+        options:
+          - Elasticsearch
+          - Opensearch
+  workflow_call:
+    inputs:
+      camunda_plaform_branch:
+        type: string
+        description: Branch from camunda_platform repository
+        required: true
+        default: "main"
+      version:
+        type: string
+        description: Select a version
+      search_engine:
+        description: Application search engine
+        type: string
+        required: true
 
 jobs:
-  build:
+  install_dependencies:
     runs-on: ubuntu-latest
+    outputs:
+      RUNNER: ${{ runner.name }}
     steps:
-    - uses: actions/checkout@v4
-    - name: "Install Docker"
-      # run: apt install docker docker-compose -y
+    - name: "Checkout main repo"
+      uses: actions/checkout@v4
+
+    # - name: "Checkout second repo"
+    #   uses: actions/checkout@v4
+    #   with:
+    #     repository: WelderWDE/docker_learn
+    #     path: "docker_learn"
+    #     ref: ${{ inputs.camunda_plaform_branch }}
+    
+    - name: "print data"
       run: |
-        sudo apt-get install docker-compose -y;
-        docker-compose --version
+        echo ${{ inputs.camunda_plaform_branch }}
+
+    - name: "Run application with ElasticSearch"
+      if: ${{ contains(inputs.search_engine, 'Elasticsearch') }}
+      run: |
+        echo "With elasticsearch"
+    
+    - name: "Run application with OpenSearch"
+      if: ${{ contains(inputs.search_engine, 'Opensearch') }}
+      run: |
+        echo "With opensearch"

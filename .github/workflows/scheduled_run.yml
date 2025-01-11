@@ -1,0 +1,23 @@
+name: Trigger First Workflow (Scheduled)
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "0 0 * * *" # Run daily at midnight (adjust as needed)
+
+jobs:
+  trigger_first_workflow:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: LS DIR
+        run: | 
+          ls .github/workflows
+
+      - name: Trigger first workflow
+        uses: ./.github/workflows/run_docker_compose.yml@use_version
+        with:
+          camunda_plaform_branch: "main"
+          version: ""
+          search_engine: "Opensearch"
