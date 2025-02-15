@@ -10,7 +10,9 @@ on:
         type: choice
         description: "lol"
         options:
-          - '["10", "12"]'
+          - "10"
+          - "12"
+          - '"10", "12"'
 
 env:
   VER: ${{ inputs.versions || '["10", "12", "14"]' }}
@@ -20,10 +22,23 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        version: ${{ fromJSON(env.VER) }}
-        os: [ubuntu-latest]
+        version: ${{ fromJSON(format('[{0}]', inputs.versions || '"10", "12", "14"')) }}
+        os: [linux, windows]
     steps:
     - name: print matrix
       run: |
+        if [[ ${{ matrix.version }} -eq 10 ]]
+        then
+          echo "The variable is 10"
+          VAR="foo"
+        elif [[ ${{ matrix.version }} -eq 12 ]]
+        then
+          echo "The variable is 12"
+          VAR="bar"
+        else
+          echo "The variable is lol"
+          VAR="lol"
+        fi
+
         echo ${{ matrix.version }} ${{ matrix.os }}
-        echo ${{ env.VER }}
+        echo $VAR
